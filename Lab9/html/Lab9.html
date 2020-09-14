@@ -1,0 +1,393 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Lab9</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-07-31"><meta name="DC.source" content="Lab9.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercise 9.1</a></li><li><a href="#2">Exercise 9.2</a></li></ul></div><h2 id="1">Exercise 9.1</h2><pre class="codeinput"><span class="comment">%a</span>
+
+X = zeros(1,100);
+<span class="keyword">for</span> n = 1:100
+    X(n) = (0.5 + cos((pi/30)*(n-1)) + cos((pi/5)*(n-1)) + cos(pi*(n-1) + <span class="keyword">...</span>
+    2*pi/3))* (un_dsp((n-1),0) - un_dsp((n-1),100));
+<span class="keyword">end</span>
+
+M = 128;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+
+<span class="comment">%b</span>
+
+X_DFT = fft(X,128);
+<span class="comment">% The DFT coefficients are frequency samples of the DTFT values. THe kth</span>
+<span class="comment">% DFT coefficient is sampled at the frequency (2*pi*k)/128</span>
+
+<span class="comment">% a and b plot</span>
+
+
+
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , abs ( X_DTFT ) , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">' Magnitude DTFT and 128 DFT'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Amplitude '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">' DTFT '</span>) ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , angle ( X_DTFT ) / pi , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Phase DTFT and 128 DFT'</span>)
+xlabel ( <span class="string">' Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Phase(/times /pi rad) '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">'DTFT'</span>) ;
+
+<span class="comment">% c</span>
+
+M = 512;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+X_DFT = fft(X,512);
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , abs ( X_DTFT ) , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">' Magnitude DTFT and 512 DFT'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Amplitude '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">' DTFT '</span>) ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , angle ( X_DTFT ) / pi , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Phase DTFT and 512 DFT'</span>)
+xlabel ( <span class="string">' Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Phase(/times /pi rad) '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">'DTFT'</span>) ;
+
+<span class="comment">% The 512 point DFT has more samples, giving a more accurate transform.</span>
+<span class="comment">% Using more points would give more accurate transforms as well.</span>
+
+<span class="comment">%d</span>
+M = 64;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+X_DFT = fft(X,512);
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , abs ( X_DTFT ) , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">' Magnitude DTFT and 64 DFT'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Amplitude '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">' DTFT '</span>) ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , <span class="string">'rx '</span>) ;
+hold <span class="string">on</span> ;
+plot ( w / pi , angle ( X_DTFT ) / pi , <span class="string">'b - '</span>) ;
+hold <span class="string">off</span> ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Phase DTFT and 64 DFT'</span>)
+xlabel ( <span class="string">' Normalized Radian Frequency (\times \pi rad/sample) '</span>) ;
+ylabel ( <span class="string">' Phase(/times /pi rad) '</span>) ;
+legend ( <span class="string">' DFT '</span> , <span class="string">'DTFT'</span>) ;
+
+<span class="comment">% The 64 point dft is less accurate than the 128 dft as it has less samples</span>
+</pre><pre class="codeoutput error">Error using plot
+Vectors must be the same length.
+
+Error in Lab9 (line 91)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , 'rx ') ;
+</pre><h2 id="2">Exercise 9.2</h2><pre class="codeinput">yconv = conv(h, X);
+
+figure;
+stem(yconv);
+title(<span class="string">'stem plot yconv'</span>);
+
+<span class="comment">% based on the characteristics of the filter, the plot can be explained</span>
+<span class="comment">% as the majority of points are those which passed through with an</span>
+<span class="comment">% absolute normalized frequency is at or above 0.5. As specidied by the</span>
+<span class="comment">% filter.</span>
+
+<span class="comment">%b</span>
+M = 256;
+
+X_DFT = fft(X,256);
+h_DFT = fft(h,256);
+
+DFT_Y256 = X_DFT .* h_DFT;
+
+y256 = ifft(DFT_Y256,256);
+
+figure;
+stem(y256);
+title(<span class="string">'stem plot y256'</span>);
+
+<span class="comment">% Yes the ifft gives a very similar output as the time domain analysis, at</span>
+<span class="comment">% least as far as can be observed by viewing the plots</span>
+
+<span class="comment">%c</span>
+M = 128;
+
+X_DFT = fft(X,128);
+h_DFT = fft(h,128);
+
+DFT_Y128 = X_DFT .* h_DFT;
+
+y128 = ifft(DFT_Y128,128);
+
+figure;
+stem(y128);
+title(<span class="string">'stem plot y128'</span>);
+
+<span class="comment">% The y128 does not seem the same by plot inspection, as it does not have</span>
+<span class="comment">% as many samples, making the result less accurate;</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercise 9.1
+
+%a
+
+X = zeros(1,100);
+for n = 1:100
+    X(n) = (0.5 + cos((pi/30)*(n-1)) + cos((pi/5)*(n-1)) + cos(pi*(n-1) + ...
+    2*pi/3))* (un_dsp((n-1),0) - un_dsp((n-1),100));
+end
+
+M = 128;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+
+%b
+
+X_DFT = fft(X,128);
+% The DFT coefficients are frequency samples of the DTFT values. THe kth
+% DFT coefficient is sampled at the frequency (2*pi*k)/128
+
+% a and b plot
+
+
+
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , 'rx ') ;
+hold on ;
+plot ( w / pi , abs ( X_DTFT ) , 'b - ') ;
+hold off ;
+grid on ;
+title ( ' Magnitude DTFT and 128 DFT')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Amplitude ') ;
+legend ( ' DFT ' , ' DTFT ') ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , 'rx ') ;
+hold on ;
+plot ( w / pi , angle ( X_DTFT ) / pi , 'b - ') ;
+hold off ;
+grid on ;
+title ( 'Phase DTFT and 128 DFT')
+xlabel ( ' Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Phase(/times /pi rad) ') ;
+legend ( ' DFT ' , 'DTFT') ;
+
+% c
+
+M = 512;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+X_DFT = fft(X,512);
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , 'rx ') ;
+hold on ;
+plot ( w / pi , abs ( X_DTFT ) , 'b - ') ;
+hold off ;
+grid on ;
+title ( ' Magnitude DTFT and 512 DFT')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Amplitude ') ;
+legend ( ' DFT ' , ' DTFT ') ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , 'rx ') ;
+hold on ;
+plot ( w / pi , angle ( X_DTFT ) / pi , 'b - ') ;
+hold off ;
+grid on ;
+title ( 'Phase DTFT and 512 DFT')
+xlabel ( ' Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Phase(/times /pi rad) ') ;
+legend ( ' DFT ' , 'DTFT') ;
+
+% The 512 point DFT has more samples, giving a more accurate transform.
+% Using more points would give more accurate transforms as well. 
+
+%d
+M = 64;
+w = - pi :2* pi / M : pi -2* pi / M ;
+X_DTFT = dtft(X,w);
+X_DFT = fft(X,512);
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , 'rx ') ;
+hold on ;
+plot ( w / pi , abs ( X_DTFT ) , 'b - ') ;
+hold off ;
+grid on ;
+title ( ' Magnitude DTFT and 64 DFT')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Amplitude ') ;
+legend ( ' DFT ' , ' DTFT ') ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , 'rx ') ;
+hold on ;
+plot ( w / pi , angle ( X_DTFT ) / pi , 'b - ') ;
+hold off ;
+grid on ;
+title ( 'Phase DTFT and 64 DFT')
+xlabel ( ' Normalized Radian Frequency (\times \pi rad/sample) ') ;
+ylabel ( ' Phase(/times /pi rad) ') ;
+legend ( ' DFT ' , 'DTFT') ;
+
+% The 64 point dft is less accurate than the 128 dft as it has less samples
+
+%% Exercise 9.2
+
+yconv = conv(h, X);
+
+figure;
+stem(yconv);
+title('stem plot yconv');
+
+% based on the characteristics of the filter, the plot can be explained
+% as the majority of points are those which passed through with an
+% absolute normalized frequency is at or above 0.5. As specidied by the
+% filter.
+
+%b
+M = 256;
+
+X_DFT = fft(X,256);
+h_DFT = fft(h,256);
+
+DFT_Y256 = X_DFT .* h_DFT;
+
+y256 = ifft(DFT_Y256,256);
+
+figure;
+stem(y256);
+title('stem plot y256');
+
+% Yes the ifft gives a very similar output as the time domain analysis, at
+% least as far as can be observed by viewing the plots
+
+%c
+M = 128;
+
+X_DFT = fft(X,128);
+h_DFT = fft(h,128);
+
+DFT_Y128 = X_DFT .* h_DFT;
+
+y128 = ifft(DFT_Y128,128);
+
+figure;
+stem(y128);
+title('stem plot y128');
+
+% The y128 does not seem the same by plot inspection, as it does not have
+% as many samples, making the result less accurate;
+
+
+
+        
+##### SOURCE END #####
+--></body></html>

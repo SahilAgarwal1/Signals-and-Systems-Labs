@@ -1,0 +1,37 @@
+%% Exercise 9.1
+
+%a
+
+X = zeros(1,100);
+for n = 0:99
+    X(n) = (0.5 + cos((pi/30)*n) + cos((pi/5)*n) + cos(pi*n + 2*pi/n)) ...
+        *(un_dsp(n,0) - un_dsp(n - 100));
+end
+
+w = -pi: pi/1000 : pi;
+dtft(X,w);
+
+
+figure ;
+subplot (2 , 1 , 1)
+plot ( w / pi , fftshift ( abs ( X_DFT ) ) , 'rx ') ;
+hold on ;
+plot ( w / pi , abs ( X_DTFT ) , 'b - ') ;
+hold off ;
+grid on ;
+title ( ' Magnitude ')
+xlabel ( 'Normalized Radian Frequency (\ times \ pi rad / sample ) ') ;
+ylabel ( ' Amplitude ') ;
+legend ( ' DFT ' , ' DTFT ') ;
+subplot (2 , 1 , 2)
+plot ( w / pi , fftshift ( angle ( X_DFT ) / pi ) , 'rx ') ;
+hold on ;
+plot ( w / pi , angle ( X_DTFT ) / pi , 'b - ') ;
+hold off ;
+grid on ;
+title ( 'Phase')
+xlabel ( ' Normalized Radian Frequency (\ times \ pi rad / sample ) ') ;
+ylabel ( ' Phase (\ times \ pi rad ) ') ;
+legend ( ' DFT ' , 'DTFT') ;
+
+        

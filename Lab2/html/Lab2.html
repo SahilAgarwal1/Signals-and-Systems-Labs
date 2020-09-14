@@ -1,0 +1,512 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Lab2</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-22"><meta name="DC.source" content="Lab2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercise 2.1</a></li><li><a href="#2">Exercise 2.2</a></li></ul></div><h2 id="1">Exercise 2.1</h2><pre class="codeinput"><span class="comment">%%2.1(a)</span>
+tt = 0:1/8000:1;
+s1 = 3*cos(800*pi*tt - pi/3);
+s2 = 2 * cos(800 * pi * tt - pi/4);
+s3 = 2 * cos(810* pi * tt - pi/4);
+figure(1);
+plot(tt,s1);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Amplitude'</span>);
+title(<span class="string">'Plot of s1(t)'</span>);
+grid <span class="string">on</span>;
+axis([0 0.01 -4 4]);
+<span class="comment">% There are 400 periods of the sinusoid s1 in a second</span>
+figure(2);
+plot(tt,s2);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Amplitude'</span>);
+title(<span class="string">'Plot of s2(t)'</span>);
+grid <span class="string">on</span>;
+axis([0 0.01 -3 3]);
+<span class="comment">% There are 400 periods of the sinusoid s2 in a second</span>
+figure(3);
+plot(tt,s3);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Amplitude'</span>);
+title(<span class="string">'Plot of s3(t)'</span>);
+grid <span class="string">on</span>;
+axis([0 0.01 -3 3]);
+<span class="comment">% There are 405 periods of the sinusoid s3 in a second</span>
+
+<span class="comment">%%2.1(b)</span>
+s1_scaled = s1/max(abs(s1));
+s2_scaled = s2/max(abs(s2));
+s3_scaled = s3/max(abs(s3));
+
+audiowrite(<span class="string">'s1.wav'</span>,s1_scaled,8000);
+audiowrite(<span class="string">'s2.wav'</span>,s2_scaled,8000);
+audiowrite(<span class="string">'s3.wav'</span>,s3_scaled,8000);
+
+<span class="comment">%%2.1(c)</span>
+soundsc(s1_scaled,8000);
+pause(2);
+soundsc(s2_scaled,8000);
+pause(2);
+soundsc(s3_scaled,8000);
+pause(2);
+
+<span class="comment">% The sound from s1 and s2 is indestinguishable. The sound from s3 is</span>
+<span class="comment">% slightly different</span>
+
+<span class="comment">%%2.1(d)</span>
+x1 = s1 + s2;
+figure(4);
+plot(tt,x1);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Amplitude'</span>);
+title(<span class="string">'Plot of x1(t)'</span>);
+grid <span class="string">on</span>;
+axis([0 0.01 -5 5]);
+
+
+<span class="comment">%%2.1(e)</span>
+x2 = s2 + s3;
+figure(5);
+plot(tt,x2);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Amplitude'</span>);
+title(<span class="string">'Plot of x2(t)'</span>);
+grid <span class="string">on</span>;
+axis([0 0.01 -5 5]);
+x2_scaled = x2/max(abs(x2));
+soundsc(x2_scaled,8000);
+pause(2);
+
+<span class="comment">%x2 sounds different from s2 and s3, x2's sound resonates while s2 and s3</span>
+<span class="comment">%sound like pure tones</span>
+</pre><img vspace="5" hspace="5" src="Lab2_01.png" alt=""> <img vspace="5" hspace="5" src="Lab2_02.png" alt=""> <img vspace="5" hspace="5" src="Lab2_03.png" alt=""> <img vspace="5" hspace="5" src="Lab2_04.png" alt=""> <img vspace="5" hspace="5" src="Lab2_05.png" alt=""> <h2 id="2">Exercise 2.2</h2><pre class="codeinput"><span class="comment">%%2.2(a)</span>
+<span class="comment">%Functions below</span>
+
+<span class="comment">%%2.2(b)</span>
+<span class="comment">%Functions below</span>
+
+keys = [64 62 60 62 64 64 64 62 62 62 64 67 67];
+Xs = [1 1 1 1 1 1 1 1 1 1 1 1 1];
+start_times = [0 0.35 0.7 1.05 1.4 1.75 2.1 2.7 3.05 3.4 4 4.35 4.7];
+end_times = [0.25 0.6 0.95 1.3 1.65 2 2.6 2.95 3.3 3.9 4.25 4.6 5.2];
+fs = 8000;
+x = build_song(keys, Xs, start_times, end_times, fs);
+soundsc(x, 8000);
+pause(2);
+audiowrite(<span class="string">'mary.wav'</span>,song,8000);
+<span class="comment">% Besides the tune, the song sounds garbled and the transitions between</span>
+<span class="comment">% notes is not smooth.</span>
+
+<span class="comment">%%2.2(c)</span>
+figure(4);
+spectrogram(x,512,256,512,fs,<span class="string">'yaxis'</span>);
+<span class="comment">% The sinusoids in the spectrogram are represented by the sectioned off</span>
+<span class="comment">% "yellowish" areas of the spectrogram. Some oddities seem to be the "blue"</span>
+<span class="comment">% areas of high power over the entire frequency range. These seem to occur</span>
+<span class="comment">% between consecutive notes, and likley correlate to the rough transitions</span>
+<span class="comment">% between notes.</span>
+
+<span class="comment">%%2.2(d)</span>
+Xs = [0.1155 * exp(j * -2.1299)<span class="keyword">...</span>
+, 0.3417 * exp(j * 1.6727), 0.1789* exp(j * -2.5454) <span class="keyword">...</span>
+, 0.1232 * exp(j * 0.6607), 0.0678 * exp(j * -2.0390) <span class="keyword">...</span>
+,0.0473 * exp(j * 2.1597), 0.0260 * exp(j * -1.0467) <span class="keyword">...</span>
+, 0.0045 * exp(j * 1.8581), 0.0020 * exp(j * -2.3925)];
+
+x = build_song_wo_adsr(keys, Xs, start_times, end_times, fs);
+audiowrite(<span class="string">'mary_trumpet.wav'</span>,x,8000);
+figure(5);
+spectrogram(x,512,256,512,fs,<span class="string">'yaxis'</span>);
+<span class="comment">% This spectrogram shows much more defined and clear lines for the</span>
+<span class="comment">% frequencies (much less noise) for each sinusoid</span>
+
+<span class="comment">%%2.2(e)</span>
+figure(6);
+[ note tt ] = key_to_note (69 , 1 , 0.25 , fs ) ;
+plot ( tt , note ) ;
+
+hold <span class="string">on</span> ;
+plot ( tt , adsr ( note ) , <span class="string">'r -'</span>) ;
+hold <span class="string">off</span> ;
+
+x = build_song(keys,Xs,start_times,end_times,fs);
+audiowrite(<span class="string">'mary_trumpet_adsr.wav'</span>,x,8000);
+figure(7);
+spectrogram(x,512,256,512,fs,<span class="string">'yaxis'</span>);
+<span class="comment">% The ADSR makes the notes fade in and fade out. This makes the transitions</span>
+<span class="comment">% between notes less abrupt and helps the song sound smoother. This is</span>
+<span class="comment">% shown in the spectrogram by the fading power of each signal near its</span>
+<span class="comment">% start and end times.</span>
+
+
+<span class="comment">%%ALL FUNCTIONS SUPPORTING THIS CODE</span>
+
+type <span class="string">key_to_note</span>
+type <span class="string">build_song</span>
+type <span class="string">build_song_wo_adsr</span>
+type <span class="string">key_to_musical_note</span>
+type <span class="string">adsr.m</span>
+</pre><pre class="codeoutput">
+function [ x,t ] = key_to_note ( key , X , dur , fs )
+% key_to_note : Produces a sinusoidal waveform corresponding to a
+%given piano key number
+% Input Args :
+%   key : number of the note ( key ) on piano keyboard
+%    X : phasor of sinusoid
+%   dur : duration of note ( in seconds )
+%   fs : A scalar indicating the sampling rate ( in Hz )
+%
+% Output :
+%   x : sinusoidal waveform of the note
+%   t : optional time vector
+
+t = 0:1/ fs : dur ; % Time vector
+f = 440 * 2^(key -69/12); % &lt;========== complete this line
+x = real (X* exp(j*2 *pi*f*t)); % &lt;========== complete this line
+end
+
+
+function x = build_song ( keys , Xs , start_times , end_times , fs )
+% build_song : This function takes in the input parameters used to describe
+% a song, and outputs a sampled vector representing the signal of the song
+%
+% Input Args :
+%   keys : A length - N vector of key / note numbers , where
+%   N = number of notes in song
+%   Xs : A length - N vector of phasors
+%   start_times : A length - N vector of start times of notes
+%                   ( in seconds )
+%   end_times : A length - N vector of end times of notes
+%               ( in seconds )
+%   fs : A scalar indicating the sampling rate ( in Hz )
+%
+% Output :
+%   x : A vector that holds the signal samples of the song built
+
+len_in_samples = ceil(max(end_times)*fs) + 1; % the ceil function ensures a
+% whole number is returned to define the size;
+x = zeros(1,len_in_samples);
+
+for i = 1: (length(keys))
+    note = key_to_musical_note(keys(i), Xs, end_times(i) - start_times(i), fs);
+    note = adsr(note);
+    start_in_samples = round(start_times(i) * fs) +1;
+    end_in_samples = start_in_samples + length(note) -1;
+    x(start_in_samples:end_in_samples) = x(start_in_samples:end_in_samples) + note;
+end
+end
+
+
+
+
+function x = build_song_wo_adsr ( keys , Xs , start_times , end_times , fs )
+% build_song : This function takes in the input parameters used to describe
+% a song, and outputs a sampled vector representing the signal of the song
+%
+% Input Args :
+%   keys : A length - N vector of key / note numbers , where
+%   N = number of notes in song
+%   Xs : A length - N vector of phasors
+%   start_times : A length - N vector of start times of notes
+%                   ( in seconds )
+%   end_times : A length - N vector of end times of notes
+%               ( in seconds )
+%   fs : A scalar indicating the sampling rate ( in Hz )
+%
+% Output :
+%   x : A vector that holds the signal samples of the song built
+
+len_in_samples = ceil(max(end_times)*fs) + 1; % the ceil function ensures a
+% whole number is returned to define the size;
+x = zeros(1,len_in_samples);
+
+for i = 1: (length(keys))
+    note = key_to_musical_note(keys(i), Xs, end_times(i) - start_times(i), fs);
+    start_in_samples = round(start_times(i) * fs) +1;
+    end_in_samples = start_in_samples + length(note) -1;
+    x(start_in_samples:end_in_samples) = x(start_in_samples:end_in_samples) + note;
+end
+end
+
+
+
+function [x , t ] = key_to_musical_note( key , Xs , dur , fs)
+% key_ t o _m u s ic a l _n o t e : Produces a musical node corresponding
+% to a given piano key number
+%
+% Input Args :
+%   key : number of the note ( key ) on piano keyboard
+%   Xs : A vector contains the phasors of harmonics starting
+%        from the 1 st harmonic
+%   dur : duration of note ( in seconds )
+%   fs : A scalar indicating the sampling rate ( in Hz )
+%
+% Output :
+%   x : waveform of the note
+%   t : optional time vector
+t = 0:1/ fs : dur ; % Time vector
+f = 440 * 2^(key -69/12);%
+x = zeros (1 , length ( t ) ) ; % create 0s vector for the sampled signal
+num_harmonics = length ( Xs ) ; % number of harmonics
+% instantiates the signal x with the sum of the harmonics
+for n = 1: num_harmonics
+x = x + real (Xs(n) * exp(j * 2 * pi * f * t));
+end
+end
+
+function env_note = adsr ( note )
+% This function smoothes out the transitions between the notes by adding
+% decays and attack to subsequent notes
+
+% Below are the parameters that specify the ADSR envelope
+Pattack = .2; % Length of attack ( proportion )
+Pdecay = .1; % Length of decay ( proportion )
+Prelease = .3; % Length of release ( proportion )
+Vattack = 1; % Attack maximum value
+Vsustain = 0.75; % Sustain value
+
+L = length ( note ) ; % Length of note signal
+Lattack = floor ( L * Pattack ) ;% Length of attack
+Ldecay = floor ( L * Pdecay ) ; % Length of decay
+Lrelease = floor ( L * Prelease ) ; % Legnth of release
+Lsustain = L - Lattack - Ldecay - Lrelease ; % length of sustain
+
+
+% Generate the ADSR portions of the time weights
+attack = linspace (0 , Vattack , Lattack ) ;
+decay = linspace ( Vattack , Vsustain , Ldecay ) ;
+sustain = linspace ( Vsustain , Vsustain , Lsustain ) ;
+release = linspace ( Vsustain , 0 , Lrelease ) ;
+% Concatenate to get time weight vector
+weight = [ attack , decay , sustain , release ];
+env_note = weight .* note; % Apply ADSR envelop to note
+end
+
+</pre><img vspace="5" hspace="5" src="Lab2_06.png" alt=""> <img vspace="5" hspace="5" src="Lab2_07.png" alt=""> <img vspace="5" hspace="5" src="Lab2_08.png" alt=""> <img vspace="5" hspace="5" src="Lab2_09.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercise 2.1
+%%2.1(a)
+tt = 0:1/8000:1;
+s1 = 3*cos(800*pi*tt - pi/3);
+s2 = 2 * cos(800 * pi * tt - pi/4);
+s3 = 2 * cos(810* pi * tt - pi/4);
+figure(1);
+plot(tt,s1);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Plot of s1(t)');
+grid on;
+axis([0 0.01 -4 4]);
+% There are 400 periods of the sinusoid s1 in a second
+figure(2);
+plot(tt,s2);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Plot of s2(t)');
+grid on;
+axis([0 0.01 -3 3]);
+% There are 400 periods of the sinusoid s2 in a second
+figure(3);
+plot(tt,s3);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Plot of s3(t)');
+grid on;
+axis([0 0.01 -3 3]);
+% There are 405 periods of the sinusoid s3 in a second
+
+%%2.1(b)
+s1_scaled = s1/max(abs(s1));
+s2_scaled = s2/max(abs(s2));
+s3_scaled = s3/max(abs(s3));
+
+audiowrite('s1.wav',s1_scaled,8000);
+audiowrite('s2.wav',s2_scaled,8000);
+audiowrite('s3.wav',s3_scaled,8000);
+
+%%2.1(c)
+soundsc(s1_scaled,8000);
+pause(2);
+soundsc(s2_scaled,8000);
+pause(2);
+soundsc(s3_scaled,8000);
+pause(2);
+
+% The sound from s1 and s2 is indestinguishable. The sound from s3 is
+% slightly different
+
+%%2.1(d)
+x1 = s1 + s2;
+figure(4);
+plot(tt,x1);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Plot of x1(t)');
+grid on;
+axis([0 0.01 -5 5]);
+
+
+%%2.1(e)
+x2 = s2 + s3;
+figure(5);
+plot(tt,x2);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Plot of x2(t)');
+grid on;
+axis([0 0.01 -5 5]);
+x2_scaled = x2/max(abs(x2));
+soundsc(x2_scaled,8000);
+pause(2);
+
+%x2 sounds different from s2 and s3, x2's sound resonates while s2 and s3
+%sound like pure tones
+
+%% Exercise 2.2
+
+%%2.2(a)
+%Functions below
+
+%%2.2(b)
+%Functions below
+
+keys = [64 62 60 62 64 64 64 62 62 62 64 67 67];
+Xs = [1 1 1 1 1 1 1 1 1 1 1 1 1];
+start_times = [0 0.35 0.7 1.05 1.4 1.75 2.1 2.7 3.05 3.4 4 4.35 4.7];
+end_times = [0.25 0.6 0.95 1.3 1.65 2 2.6 2.95 3.3 3.9 4.25 4.6 5.2];
+fs = 8000;
+x = build_song(keys, Xs, start_times, end_times, fs);
+soundsc(x, 8000);
+pause(2);
+audiowrite('mary.wav',song,8000);
+% Besides the tune, the song sounds garbled and the transitions between
+% notes is not smooth.
+
+%%2.2(c)
+figure(4);
+spectrogram(x,512,256,512,fs,'yaxis');
+% The sinusoids in the spectrogram are represented by the sectioned off
+% "yellowish" areas of the spectrogram. Some oddities seem to be the "blue"
+% areas of high power over the entire frequency range. These seem to occur
+% between consecutive notes, and likley correlate to the rough transitions
+% between notes. 
+
+%%2.2(d)
+Xs = [0.1155 * exp(j * -2.1299)...
+, 0.3417 * exp(j * 1.6727), 0.1789* exp(j * -2.5454) ...
+, 0.1232 * exp(j * 0.6607), 0.0678 * exp(j * -2.0390) ...
+,0.0473 * exp(j * 2.1597), 0.0260 * exp(j * -1.0467) ...
+, 0.0045 * exp(j * 1.8581), 0.0020 * exp(j * -2.3925)];
+
+x = build_song_wo_adsr(keys, Xs, start_times, end_times, fs);
+audiowrite('mary_trumpet.wav',x,8000);
+figure(5);
+spectrogram(x,512,256,512,fs,'yaxis');
+% This spectrogram shows much more defined and clear lines for the
+% frequencies (much less noise) for each sinusoid
+
+%%2.2(e)
+figure(6);
+[ note tt ] = key_to_note (69 , 1 , 0.25 , fs ) ;
+plot ( tt , note ) ;
+
+hold on ;
+plot ( tt , adsr ( note ) , 'r -') ;
+hold off ;
+
+x = build_song(keys,Xs,start_times,end_times,fs);
+audiowrite('mary_trumpet_adsr.wav',x,8000);
+figure(7);
+spectrogram(x,512,256,512,fs,'yaxis');
+% The ADSR makes the notes fade in and fade out. This makes the transitions
+% between notes less abrupt and helps the song sound smoother. This is
+% shown in the spectrogram by the fading power of each signal near its
+% start and end times.
+
+
+%%ALL FUNCTIONS SUPPORTING THIS CODE
+
+type key_to_note
+type build_song
+type build_song_wo_adsr
+type key_to_musical_note
+type adsr.m
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

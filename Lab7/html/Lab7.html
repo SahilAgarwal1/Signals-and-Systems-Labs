@@ -1,0 +1,667 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Lab7</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-07-17"><meta name="DC.source" content="Lab7.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercise 7.1</a></li><li><a href="#2">Exercise 7.2</a></li><li><a href="#3">b)</a></li></ul></div><h2 id="1">Exercise 7.1</h2><pre class="codeinput"><span class="comment">%a)</span>
+
+<span class="comment">% i) h[n] = &#948;[n] - 0.8&#948;[n-1]</span>
+<span class="comment">% H[z] = 1 - 0.8z^-1</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%Poles:0</span>
+<span class="comment">%zeros:0.8</span>
+<span class="comment">% stable</span>
+figure;
+zplane(0.8,0);
+title(<span class="string">'i pole-zero plot'</span>);
+
+<span class="comment">%The filter matches the analytic equation, the pole corresponds to the</span>
+<span class="comment">%decay towards zero</span>
+
+impulse = [ zeros(1,25) 1 zeros(1,25)];
+a = [1 -0.8];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title(<span class="string">'i filter plot'</span>)
+
+<span class="comment">% ii) h[n] = &#948;[n] + 0.8&#948;[n-1]</span>
+<span class="comment">% H[z] = 1 + 0.8z^-1</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%zeros:-0.8</span>
+<span class="comment">%poles:0</span>
+<span class="comment">%stable</span>
+figure;
+zplane(-0.8,0);
+title(<span class="string">'ii pole-zero plot'</span>);
+
+a = [1 +0.8];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title(<span class="string">'ii filter plot'</span>)
+
+<span class="comment">%The filter matches the analytic equation, the pole corresponds to the</span>
+<span class="comment">%decay and growth towards zero</span>
+
+<span class="comment">% iii) h[n] = &#948;[n + 10] - 0.8&#948;[n + 9]</span>
+<span class="comment">%H[z] = z^10 - 0.8z^9</span>
+<span class="comment">%ROC: C - {0}</span>
+<span class="comment">%zeros:0.8, 0 mult. 9</span>
+<span class="comment">%poles: none</span>
+<span class="comment">%stable</span>
+figure;
+zplane([-0.8;0;0;0;0;0;0;0;0;0]);
+title(<span class="string">'iii pole-zero plot'</span>);
+
+a = [1 +0.8];
+b = [0 0 0 0 0 0 0 0 0 0 1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title(<span class="string">'iii filter plot'</span>)
+
+<span class="comment">%The filter matches the analytic equation, the pole corresponds to the</span>
+<span class="comment">%decay and growth towards zero</span>
+
+<span class="comment">% iv) h[n] = (1/2)&#948;[n] - &#948;[n-1]</span>
+<span class="comment">%H[z] = 1/2 - z^-1</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%zeros: 2</span>
+<span class="comment">%poles: 0</span>
+<span class="comment">%stable</span>
+figure;
+zplane(2,0);
+title(<span class="string">'iv pole-zero plot'</span>);
+
+a = [1 -2];
+b = [2];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title(<span class="string">'iv filter plot'</span>)
+
+<span class="comment">%The filter matches the analytic equation, the pole corresponds to the</span>
+<span class="comment">%growth</span>
+
+<span class="comment">%b)</span>
+
+<span class="comment">%i) h[n] = &#948;[n] - cos(0.2pi)&#948;[n -1] - 0.25&#948;[n-2]</span>
+<span class="comment">%freq resp: H(e^jw) = 1 - cos(0.2pi)*e^-jw - 0.25e^-2jw</span>
+<span class="comment">% H[z] = 1 - cos(0.2pi)z^-1 - 0.25z^-2</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%stable</span>
+zer = [-0.23863; 1.04765];
+poles = [0;0];
+
+
+
+figure;
+zplane(zer,poles);
+title(<span class="string">'ib pole-zero plot'</span>);
+
+a = [1 -cos(0.2*pi) -0.25];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+subplot(2,1,1)
+stem(y);
+title(<span class="string">'ib filter plot'</span>)
+
+w = -pi:pi/1000:pi;
+X = dtft(y,w);
+
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Magnitude Response ib'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample ) '</span>) ;
+ylabel ( <span class="string">' Amplitude (dB) '</span>) ;
+
+<span class="comment">% The poles at zero correspond with the magnitude response</span>
+
+
+<span class="comment">%ii) h[n] = &#948;[n] - 1.8cos(0.2pi)&#948;[n -1] - 0.81&#948;[n-2]</span>
+<span class="comment">% H[z] = 1 - 1.8cos(0.2pi)z^-1 - 0.81z^-2</span>
+<span class="comment">%freq resp: H(e^jw) = 1 - 1.8cos(0.2pi)*e^-jw - 0.81e^-2jw</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%stable</span>
+zer = [-0.429534; 1.88576];
+poles = [0;0];
+
+figure;
+zplane(zer,poles);
+title(<span class="string">'iib pole-zero plot'</span>);
+
+a = [1 -1.8*cos(0.2*pi) -0.81];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+subplot(2,1,1)
+stem(y);
+title(<span class="string">'iib filter plot'</span>)
+
+X = dtft(y,w);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Magnitude Response ib'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample ) '</span>) ;
+ylabel ( <span class="string">' Amplitude (dB) '</span>) ;
+
+<span class="comment">% The poles at zero correspond with the magnitude response</span>
+
+<span class="comment">%iii) h[n] = &#948;[n] - 1.98cos(0.2pi)&#948;[n -1] - 0.9801&#948;[n-2]</span>
+<span class="comment">% H[z] = 1 - 1.98cos(0.2pi)z^-1 - 0.9801z^-2</span>
+<span class="comment">%freq resp: H(e^jw) = 1 - 1.98cos(0.2pi)*e^-jw - 0.9801e^-2jw</span>
+<span class="comment">%ROC: C - {&#8734;}</span>
+<span class="comment">%stable</span>
+zer = [-0.42487; 2.07434];
+poles = [0;0];
+
+figure;
+zplane(zer,poles);
+title(<span class="string">'iiib pole-zero plot'</span>);
+
+
+a = [1 -1.98*cos(0.2*pi) -0.9801];
+b = [1];
+y = filter(b,a,impulse);
+
+
+figure;
+subplot(2,1,1)
+stem(y);
+title(<span class="string">'iiib filter plot'</span>)
+
+X = dtft(y,w);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Magnitude Response ib'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample ) '</span>) ;
+ylabel ( <span class="string">' Amplitude (dB) '</span>) ;
+
+<span class="comment">% The poles at zero correspond with the magnitude response</span>
+</pre><img vspace="5" hspace="5" src="Lab7_01.png" alt=""> <img vspace="5" hspace="5" src="Lab7_02.png" alt=""> <img vspace="5" hspace="5" src="Lab7_03.png" alt=""> <img vspace="5" hspace="5" src="Lab7_04.png" alt=""> <img vspace="5" hspace="5" src="Lab7_05.png" alt=""> <img vspace="5" hspace="5" src="Lab7_06.png" alt=""> <img vspace="5" hspace="5" src="Lab7_07.png" alt=""> <img vspace="5" hspace="5" src="Lab7_08.png" alt=""> <img vspace="5" hspace="5" src="Lab7_09.png" alt=""> <img vspace="5" hspace="5" src="Lab7_10.png" alt=""> <img vspace="5" hspace="5" src="Lab7_11.png" alt=""> <img vspace="5" hspace="5" src="Lab7_12.png" alt=""> <img vspace="5" hspace="5" src="Lab7_13.png" alt=""> <img vspace="5" hspace="5" src="Lab7_14.png" alt=""> <img vspace="5" hspace="5" src="Lab7_15.png" alt=""> <img vspace="5" hspace="5" src="Lab7_16.png" alt=""> <h2 id="2">Exercise 7.2</h2><pre class="codeinput"><span class="comment">%a</span>
+
+[corrupt,Fs] = audioread(<span class="string">'bad_wannabe.wav'</span>);
+
+w = -pi:pi/2000:pi;
+corrupt_dtft =dtft(corrupt,w);
+length(corrupt_dtft)
+
+figure;
+subplot (2 , 1 , 1)
+plot (w/pi,20*log10(abs(corrupt_dtft))) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Magnitude Response Corrupt'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample ) '</span>) ;
+ylabel ( <span class="string">' Amplitude (dB) '</span>) ;
+
+
+h = [1 -2*cos(0.05*pi) 1];
+not_corrupt = conv(corrupt,h);
+audiowrite(<span class="string">'fired_wannabe.wav'</span>,not_corrupt,Fs)
+not_corrupt = dtft(not_corrupt,w);
+
+figure;
+subplot (2 , 1 , 1)
+plot (w/pi,20*log10(abs(not_corrupt))) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">'Magnitude Response'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample ) '</span>) ;
+ylabel ( <span class="string">' Amplitude (dB) '</span>) ;
+subplot (2 , 1 , 2)
+plot ( w / pi , angle ( not_corrupt) / pi ) ;
+grid <span class="string">on</span> ;
+title ( <span class="string">' Phase Response'</span>)
+xlabel ( <span class="string">'Normalized Radian Frequency (\times \pi rad/sample) '</span>);
+ylabel(<span class="string">'Phase(/times /pi rad)'</span>);
+
+
+<span class="comment">%The filtered audio quality dropped dramatically.</span>
+</pre><pre class="codeoutput">
+ans =
+
+        4001
+
+</pre><img vspace="5" hspace="5" src="Lab7_17.png" alt=""> <img vspace="5" hspace="5" src="Lab7_18.png" alt=""> <h2 id="3">b)</h2><pre class="codeinput">alp = 1;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+<span class="comment">% The filter is stable with -1 &lt;= alpha &lt;= 1</span>
+
+figure;
+subplot(2,1,1);
+zplane(zer,poles);
+title(<span class="string">'stable'</span>)
+
+alp = -2;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+subplot(2,1,2)
+zplane(zer,poles);
+title(<span class="string">'unstable'</span>)
+
+alp = 0;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title(<span class="string">'alpha = 0'</span>);
+
+alp = 1;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title(<span class="string">'alpha = 1'</span>);
+
+alp = .25;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title(<span class="string">'alpha = 0.25'</span>);
+
+alp = 0.5;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title(<span class="string">'alpha = 0.5'</span>);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercise 7.1
+
+%a)
+
+% i) h[n] = δ[n] - 0.8δ[n-1]
+% H[z] = 1 - 0.8z^-1
+%ROC: C - {∞}
+%Poles:0 
+%zeros:0.8
+% stable
+figure;
+zplane(0.8,0);
+title('i pole-zero plot');
+
+%The filter matches the analytic equation, the pole corresponds to the
+%decay towards zero
+
+impulse = [ zeros(1,25) 1 zeros(1,25)];
+a = [1 -0.8];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title('i filter plot')
+
+% ii) h[n] = δ[n] + 0.8δ[n-1]
+% H[z] = 1 + 0.8z^-1
+%ROC: C - {∞}
+%zeros:-0.8
+%poles:0
+%stable
+figure;
+zplane(-0.8,0);
+title('ii pole-zero plot');
+
+a = [1 +0.8];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title('ii filter plot')
+
+%The filter matches the analytic equation, the pole corresponds to the
+%decay and growth towards zero
+
+% iii) h[n] = δ[n + 10] - 0.8δ[n + 9]
+%H[z] = z^10 - 0.8z^9
+%ROC: C - {0}
+%zeros:0.8, 0 mult. 9
+%poles: none
+%stable
+figure;
+zplane([-0.8;0;0;0;0;0;0;0;0;0]);
+title('iii pole-zero plot');
+
+a = [1 +0.8];
+b = [0 0 0 0 0 0 0 0 0 0 1];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title('iii filter plot')
+
+%The filter matches the analytic equation, the pole corresponds to the
+%decay and growth towards zero
+
+% iv) h[n] = (1/2)δ[n] - δ[n-1]
+%H[z] = 1/2 - z^-1
+%ROC: C - {∞}
+%zeros: 2
+%poles: 0
+%stable
+figure;
+zplane(2,0);
+title('iv pole-zero plot');
+
+a = [1 -2];
+b = [2];
+y = filter(b,a,impulse);
+
+figure;
+stem(y);
+title('iv filter plot')
+
+%The filter matches the analytic equation, the pole corresponds to the
+%growth
+
+%b)
+
+%i) h[n] = δ[n] - cos(0.2pi)δ[n -1] - 0.25δ[n-2]
+%freq resp: H(e^jw) = 1 - cos(0.2pi)*e^-jw - 0.25e^-2jw
+% H[z] = 1 - cos(0.2pi)z^-1 - 0.25z^-2
+%ROC: C - {∞}
+%stable
+zer = [-0.23863; 1.04765];
+poles = [0;0];
+
+
+
+figure;
+zplane(zer,poles);
+title('ib pole-zero plot');
+
+a = [1 -cos(0.2*pi) -0.25];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+subplot(2,1,1)
+stem(y);
+title('ib filter plot')
+
+w = -pi:pi/1000:pi;
+X = dtft(y,w);
+
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid on ;
+title ( 'Magnitude Response ib')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample ) ') ;
+ylabel ( ' Amplitude (dB) ') ;
+
+% The poles at zero correspond with the magnitude response
+
+
+%ii) h[n] = δ[n] - 1.8cos(0.2pi)δ[n -1] - 0.81δ[n-2]
+% H[z] = 1 - 1.8cos(0.2pi)z^-1 - 0.81z^-2
+%freq resp: H(e^jw) = 1 - 1.8cos(0.2pi)*e^-jw - 0.81e^-2jw
+%ROC: C - {∞}
+%stable
+zer = [-0.429534; 1.88576];
+poles = [0;0];
+
+figure;
+zplane(zer,poles);
+title('iib pole-zero plot');
+
+a = [1 -1.8*cos(0.2*pi) -0.81];
+b = [1];
+y = filter(b,a,impulse);
+
+figure;
+subplot(2,1,1)
+stem(y);
+title('iib filter plot')
+
+X = dtft(y,w);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid on ;
+title ( 'Magnitude Response ib')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample ) ') ;
+ylabel ( ' Amplitude (dB) ') ;
+
+% The poles at zero correspond with the magnitude response
+
+%iii) h[n] = δ[n] - 1.98cos(0.2pi)δ[n -1] - 0.9801δ[n-2]
+% H[z] = 1 - 1.98cos(0.2pi)z^-1 - 0.9801z^-2
+%freq resp: H(e^jw) = 1 - 1.98cos(0.2pi)*e^-jw - 0.9801e^-2jw
+%ROC: C - {∞}
+%stable
+zer = [-0.42487; 2.07434];
+poles = [0;0];
+
+figure;
+zplane(zer,poles);
+title('iiib pole-zero plot');
+
+
+a = [1 -1.98*cos(0.2*pi) -0.9801];
+b = [1];
+y = filter(b,a,impulse);
+
+
+figure;
+subplot(2,1,1)
+stem(y);
+title('iiib filter plot')
+
+X = dtft(y,w);
+
+subplot (2 , 1 , 2)
+plot (w/pi,20*log10(abs(X))) ;
+grid on ;
+title ( 'Magnitude Response ib')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample ) ') ;
+ylabel ( ' Amplitude (dB) ') ;
+
+% The poles at zero correspond with the magnitude response
+
+%% Exercise 7.2
+
+%a
+
+[corrupt,Fs] = audioread('bad_wannabe.wav');
+
+w = -pi:pi/2000:pi;
+corrupt_dtft =dtft(corrupt,w);
+length(corrupt_dtft)
+
+figure;
+subplot (2 , 1 , 1)
+plot (w/pi,20*log10(abs(corrupt_dtft))) ;
+grid on ;
+title ( 'Magnitude Response Corrupt')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample ) ') ;
+ylabel ( ' Amplitude (dB) ') ;
+
+
+h = [1 -2*cos(0.05*pi) 1];
+not_corrupt = conv(corrupt,h);
+audiowrite('fired_wannabe.wav',not_corrupt,Fs)
+not_corrupt = dtft(not_corrupt,w);
+
+figure;
+subplot (2 , 1 , 1)
+plot (w/pi,20*log10(abs(not_corrupt))) ;
+grid on ;
+title ( 'Magnitude Response')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample ) ') ;
+ylabel ( ' Amplitude (dB) ') ;
+subplot (2 , 1 , 2)
+plot ( w / pi , angle ( not_corrupt) / pi ) ;
+grid on ;
+title ( ' Phase Response')
+xlabel ( 'Normalized Radian Frequency (\times \pi rad/sample) ');
+ylabel('Phase(/times /pi rad)');
+
+
+%The filtered audio quality dropped dramatically. 
+
+
+%% b)
+alp = 1;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+% The filter is stable with -1 <= alpha <= 1
+
+figure;
+subplot(2,1,1);
+zplane(zer,poles);
+title('stable')
+
+alp = -2;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+subplot(2,1,2)
+zplane(zer,poles);
+title('unstable')
+
+alp = 0;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title('alpha = 0');
+
+alp = 1;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title('alpha = 1');
+
+alp = .25;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title('alpha = 0.25');
+
+alp = 0.5;
+zer = [exp(j*0.05);exp(-j*0.05)];
+poles = [alp*exp(j*0.05);alp*exp(-j*0.05)];
+
+
+figure;
+[b,a] = zp2tf(zer,poles,1);
+fvtool(b,a);
+title('alpha = 0.5');
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
